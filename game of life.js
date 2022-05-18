@@ -15,13 +15,13 @@ let isLoopping = false;
 const BTN_SIZE = [60, 40], BTN_POS = [580, 70];
 let fps = 10;
 let fps_slider;
-const FPS_SLIDER_SIZE = [120, 10], FPS_SLIDER_POS = [100, 80], FPS_SLIDER_TEXT_SIZE = 25;
+const FPS_SLIDER_SIZE = [120, 10], FPS_SLIDER_POS = [100, 85], FPS_SLIDER_TEXT_SIZE = 25;
 const RUNNING_TEXT_SIZE = 25, RUNNING_TEXT_POS = [400, 100];
 
 p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
     grad = createGrad({
-        xOff: 80,
+        xOff: 100,
         yOff: 120,
         rows: 50,
         cols: 75,
@@ -92,8 +92,8 @@ function createGrad(params) {
 
     const cellCount = (states) => {
         cnt = new Array(states.length).fill(0);
-        for(let i = 1; i < rows + 1; i++) {
-            for(let j = 1; j < cols + 1; j++) {
+        for(let i = 1; i < rows - 1; i++) {
+            for(let j = 1; j < cols - 1; j++) {
                 cnt[cols * i + j] = (states[cols * (i-1) + (j-1)] == ALIVE) + 
                                     (states[cols * (i-1) + (j  )] == ALIVE) + 
                                     (states[cols * (i-1) + (j+1)] == ALIVE) + 
@@ -125,8 +125,8 @@ function createGrad(params) {
     o.update = () => {
         let _states = [...o.states];
         cnt = cellCount(o.states);
-        for(let i = 1; i < rows + 1; i++) {
-            for(let j = 1; j < cols + 1; j++) {
+        for(let i = 1; i < rows - 1; i++) {
+            for(let j = 1; j < cols - 1; j++) {
                 pos = cols * i + j;
                 o.states[pos] = rule(_states[pos], cnt[pos]);
             }
@@ -150,8 +150,8 @@ function createGrad(params) {
     }
     
     o.draw = () => {
-        for(let i = 1; i < rows + 1; i++) {
-            for(let j = 1; j < cols + 1; j++) {
+        for(let i = 1; i < rows - 1; i++) {
+            for(let j = 1; j < cols - 1; j++) {
                 draw_cell([i - 1, j - 1], o.states[cols * i + j]);
             }
         }
@@ -161,7 +161,7 @@ function createGrad(params) {
         let x = p.mouseX - xOff, y = p.mouseY - yOff;
         let i = Math.floor(y / CELL_SIZE) + 1, j = Math.floor(x / CELL_SIZE) + 1;
         let pos = cols * i + j;
-        if(i > 0 && i < rows + 1 && j > 0 && j < cols + 1) {
+        if(i > 0 && i < rows - 1 && j > 0 && j < cols - 1) {
             if(o.states[pos] == ALIVE) {
                 o.states[pos] = DEAD;
             } else {
@@ -176,8 +176,8 @@ function createGrad(params) {
 
     o.rand = (ratio) => {
         o.reset();
-        for(let i = 1; i < rows + 1; i++) {
-            for(let j = 1; j < cols + 1; j++) {
+        for(let i = 1; i < rows - 1; i++) {
+            for(let j = 1; j < cols - 1; j++) {
                 o.states[cols * i + j] = p.random() < ratio? ALIVE: DEAD;   
             }
         }
