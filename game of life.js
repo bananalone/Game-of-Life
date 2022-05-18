@@ -1,4 +1,4 @@
-/**** p5.js *****
+/**** <head> *****
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/addons/p5.sound.js"></script>
 <style>* {padding: 0; margin: 0}</style>
